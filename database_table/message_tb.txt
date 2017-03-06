@@ -1,0 +1,11 @@
+表名：message_tb(信息表)
+属性：tb_name(表名)        nchar(10)
+      property(属性)       nchar(10)
+      algorithm(算法)      nchar(10)
+      secret_key(密钥)     nchar(8)
+      vector(向量)         nchar(8)
+描述：当我们要加密表中的敏感属性时，实质就构造了一个对应关系，我们把这个关系放到这个表中记录下来；
+      反之，在解密时，我们会去销毁这个关系。
+注：（1）这个表的主键应该是tb_name和property的组合，我们暂不设置
+    （2）algorithm，我们现在只有一种
+    （3）secret_key和vector是程序分配的，而且长度一定只能是8位
