@@ -20,6 +20,7 @@ public class Server {
 			while (true) {
 				System.out.println("Waiting Client");
 				socket = serverSocket.accept();// Ω” ‹«Î«Û
+				//System.out.println(socket);
 				System.out.println("Client Conect!");
 				new ThreadedServer(socket);
 			}

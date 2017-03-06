@@ -52,15 +52,17 @@ public class Client {
 	 * 自测程序，两个测试之间要有停顿，否则出错，我这里的停顿较长
 	 */
 	public static void selfTest(PrintWriter pw) {
-		loginSelfTest(pw);
+//		loginSelfTest(pw);
+//		
+//		try {
+//			Thread.sleep(10000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		quitSelfTest(pw);
 		
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		quitSelfTest(pw);
+		encryptSelfTest(pw);
 	}
 
 	/**
@@ -77,6 +79,15 @@ public class Client {
 	 */
 	public static void loginSelfTest(PrintWriter pw) {
 		String temp = "login jd 金胖子死了";// 从键盘读取一行
+		pw.println(temp);// 写到服务器
+		pw.flush();
+	}
+	
+	/**
+	 * 加密独立测试程序
+	 */
+	public static void encryptSelfTest(PrintWriter pw) {
+		String temp = "encrypt worker_table card_number";// 从键盘读取一行
 		pw.println(temp);// 写到服务器
 		pw.flush();
 	}

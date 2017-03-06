@@ -23,13 +23,14 @@ public class ReadServerMessage extends Thread// 从服务器读取消息
 		{
 			try {
 				//当socket或io流被关闭
-				if(socket.isClosed() || bReader == null)
+				if(socket.isClosed() || bReader == null) {
 					break;
-				
-				res = bReader.readLine();
-				System.out.println(res);
-				ClientMessage.ClientMessageOutput(res);
-
+				}
+				else {
+					res = bReader.readLine();
+					System.out.println(res);
+					ClientMessage.ClientMessageOutput(res);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}		

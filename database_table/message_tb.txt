@@ -1,6 +1,6 @@
 表名：message_tb(信息表)
-属性：tb_name(表名)        nchar(10)
-      property(属性)       nchar(10)
+属性：tb_name(表名)        nchar(20)
+      property(属性)       nchar(20)
       algorithm(算法)      nchar(10)
       secret_key(密钥)     nchar(8)
       vector(向量)         nchar(8)

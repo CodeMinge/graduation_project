@@ -10,6 +10,12 @@ public class ServerMessage {
 	public static final String DBFAIL = "2"; // 数据库连接失败
 	public static final String LOGINSUCCESS = "3"; // 用户登录成功
 	public static final String LOGINFAIL = "4"; // 用户登录失败
+	public static final String NOTABLE = "5"; // 无此用户表
+	public static final String EXISTTABLE = "6"; // 存在此用户表
+	public static final String NOTCOL = "7"; // 无此列
+	public static final String EXISTCOL = "8"; // 存在此列
+	public static final String ENCRYPTSUCCESS = "9"; // 加密成功
+	public static final String ENCRYPTFAIL = "10"; // 加密失败
 	public static final String NULL = "1000"; // 无信息
 
 	public static final String[] ServerMessage = { 
@@ -17,7 +23,13 @@ public class ServerMessage {
 			"连接数据库成功", 
 			"数据库连接失败，将检查配置", 
 			"用户登录成功", 
-			"用户登录失败" 
+			"用户登录失败",
+			"无此用户表",
+			"存在此用户表",
+			"无此列",
+			"存在此列",
+			"加密成功",
+			"加密失败"
 			};
 
 	//并不是好的做法
@@ -26,7 +38,7 @@ public class ServerMessage {
 			return;
 		
 		if(Integer.parseInt(id) >= Integer.parseInt(QIUT) &&
-				Integer.parseInt(id) <= Integer.parseInt(LOGINFAIL)) {
+				Integer.parseInt(id) <= Integer.parseInt(ENCRYPTFAIL)) {
 			System.out.println(ServerMessage[Integer.parseInt(id)]);
 		}
 	}

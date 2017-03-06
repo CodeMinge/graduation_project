@@ -1,5 +1,5 @@
-表名：worker_tb(工人表)
+表名：worker_table(工人表)
 属性：worker_id(工人代号)         nchar(10)
-      card_number(身份证号码)     nchar(100)
-      salary(工资)                nchar(100)
+      card_number(身份证号码)     nchar(200)
+      salary(工资)                nchar(200)
 描述：这是阶段二的一个提供测试的数据库表，card_number和salary都属于敏感数据
