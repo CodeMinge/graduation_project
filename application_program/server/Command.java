@@ -45,7 +45,7 @@ public class Command {
 		} else if (commandArr[0].equals(COMMAND_ENCRYPT)) {
 			return encryptProcess(commandArr[1], commandArr[2], dbc);
 		} else if (commandArr[0].equals(COMMAND_DECRYPT)) {
-	//		return decryptProcess(commandArr[1], commandArr[2], dbc);
+			return decryptProcess(commandArr[1], commandArr[2], dbc);
 		}
 		
 		return ServerMessage.NULL;
@@ -104,7 +104,7 @@ public class Command {
 	/**
 	 * 加密信息解析，对某表的某列进行加密，某表的某列的前提是未经过加密
 	 * @param table        表名
-	 * @param column       列名
+	 * @param property       列名
 	 * @param dbc
 	 * @return   信息id
 	 */
@@ -118,10 +118,10 @@ public class Command {
 		ServerMessage.ServerMessageOutput(ServerMessage.EXISTTABLE); //定位信息
 		
 		res = propertyExists(table, property, dbc);
-		if(res.equals(ServerMessage.NOTCOL))
+		if(res.equals(ServerMessage.NOPROPERTY))
 			return res;
 		
-		ServerMessage.ServerMessageOutput(ServerMessage.EXISTCOL); //定位信息
+		ServerMessage.ServerMessageOutput(ServerMessage.EXISTPROPERTY); //定位信息
 		
 		res = ServerMessage.ENCRYPTSUCCESS;
 	    // 首先取得密钥和向量
@@ -177,6 +177,84 @@ public class Command {
 	}
 	
 	/**
+	 * 解密信息解析，对某表的某列进行解密，某表的某列的前提是已经过加密
+	 * @param table        表名
+	 * @param property       列名
+	 * @param dbc
+	 * @return   信息id
+	 */
+	private String decryptProcess(String table, String property, DatabaseConnection dbc) {
+		String res = ServerMessage.NULL;
+		// 确保表和列存在
+		res = tbExists(table, dbc);
+		if(res.equals(ServerMessage.NOTABLE))
+			return res;
+		
+		ServerMessage.ServerMessageOutput(ServerMessage.EXISTTABLE); //定位信息
+		
+		res = propertyExists(table, property, dbc);
+		if(res.equals(ServerMessage.NOPROPERTY))
+			return res;
+		
+		ServerMessage.ServerMessageOutput(ServerMessage.EXISTPROPERTY); //定位信息
+		
+		res = ServerMessage.DECRYPTSUCCESS;
+		String key = "";
+		String vt = "";
+
+		String sql = "SELECT * from [graduation_project].[dbo].[message_tb] where tb_name = '" + table + "' and property = '" + property + "'";
+
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {    // 取得解密的密钥和向量
+				key = rs.getString("secret_key");
+				vt = rs.getString("vector");
+				break;  // 这里只能有一行
+			}
+			System.out.println(key + " " + vt);
+			
+			sql = "SELECT * from [graduation_project].[dbo].[" + table + "]";
+			pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {       //不停地进行解密
+				//取得加密数据
+				String temp = rs.getString(1);    //这里，我的表必须是以第一列为主键，而且不能对第一列进行加密
+				String target = rs.getString(property); //这是将要解密的数据
+				System.out.println(temp + " " + target);
+				
+				//执行解密操作,temp1是解密后的结果
+				String temp1 = "";
+				sql = "SELECT [graduation_project].[dbo].[Des_Decrypt]('"+ target +"', '" + key + "', '" + vt + "')";
+				pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
+				ResultSet rs2 = pstmt.executeQuery();
+				while(rs2.next()) {
+					temp1 = rs2.getString(1);
+					break;
+				}
+				System.out.println(target + " " + temp1);
+				
+				//更新表，将解密后的内容更新到表中
+				sql = "UPDATE [graduation_project].[dbo].["+ table + "] SET " + property + " = '"+  temp1 + "' WHERE " + property + " = '" + target + "'";
+				pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
+				int i =  pstmt.executeUpdate();
+				if(i == 0) {         //检测解密情况
+					res = ServerMessage.DECRYPTFAIL;
+				}
+			}
+			//记录解密信息，实质是删除原来的的加密信息
+			sql= "DELETE FROM message_tb WHERE tb_name = '" + table +"' and property = '" + property + "'";
+			pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	/**
 	 * 确认数据库中是否存在表
 	 * @param table 表名
 	 * @param dbc
@@ -214,7 +292,7 @@ public class Command {
 	 * @return
 	 */
 	private String propertyExists(String table, String property, DatabaseConnection dbc) {
-		String res = ServerMessage.NOTCOL;
+		String res = ServerMessage.NOPROPERTY;
 		
 		//这个sql命令的结果只有一列name，而列名从上到下排列
 		String sql = "select name from syscolumns where id = object_id('graduation_project.dbo." + table + "')"; //查询所有的表
@@ -227,7 +305,7 @@ public class Command {
 				String temp = rs.getString(1); 
 				if(property.equals(temp)) {
 					System.out.println(property + " " + temp);
-					res = ServerMessage.EXISTCOL;
+					res = ServerMessage.EXISTPROPERTY;
 					break;
 				}
 			}

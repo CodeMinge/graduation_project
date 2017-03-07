@@ -62,14 +62,15 @@ public class Client {
 //		
 //		quitSelfTest(pw);
 		
-		encryptSelfTest(pw);
+//		encryptSelfTest(pw);
+		decryptSelfTest(pw);
 	}
 
 	/**
 	 * 退出命令自测程序
 	 */
 	public static void quitSelfTest(PrintWriter pw) {
-		String temp = "q";// 从键盘读取一行
+		String temp = "q";
 		pw.println(temp);// 写到服务器
 		pw.flush();
 	}
@@ -78,7 +79,7 @@ public class Client {
 	 * 登录命令自测程序
 	 */
 	public static void loginSelfTest(PrintWriter pw) {
-		String temp = "login jd 金胖子死了";// 从键盘读取一行
+		String temp = "login jd 金胖子死了";
 		pw.println(temp);// 写到服务器
 		pw.flush();
 	}
@@ -87,7 +88,16 @@ public class Client {
 	 * 加密独立测试程序
 	 */
 	public static void encryptSelfTest(PrintWriter pw) {
-		String temp = "encrypt worker_table card_number";// 从键盘读取一行
+		String temp = "encrypt worker_table card_number";
+		pw.println(temp);// 写到服务器
+		pw.flush();
+	}
+	
+	/**
+	 * 解密独立测试程序
+	 */
+	public static void decryptSelfTest(PrintWriter pw) {
+		String temp = "decrypt worker_table card_number";
 		pw.println(temp);// 写到服务器
 		pw.flush();
 	}
