@@ -28,7 +28,6 @@ public class ReadServerMessage extends Thread// 从服务器读取消息
 				}
 				else {
 					res = bReader.readLine();
-					System.out.println(res);
 					ClientMessage.ClientMessageOutput(res);
 				}
 			} catch (IOException e) {

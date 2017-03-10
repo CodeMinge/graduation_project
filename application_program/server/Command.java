@@ -1,5 +1,6 @@
 package server;
 
+import java.io.PrintWriter;
 import java.sql.*;
 
 import message_center.ServerMessage;
@@ -10,7 +11,7 @@ import message_center.ServerMessage;
  * -------解密
  */
 
-public class Command {
+public class Command extends Thread {
 
 	public static final String COMMAND_QIUT = "q";
 	public static final String COMMAND_LOGIN = "login";
@@ -21,9 +22,22 @@ public class Command {
 
 	private String command = null;
 	private KeyAndVector kav = new KeyAndVector(); // 密钥向量生成器
-
-	public void setCommand(String target) {
+	private PrintWriter pw = null;
+	private DatabaseConnection dbc = null;
+	private String result = null;
+	
+	public Command(String target, PrintWriter pw, DatabaseConnection dbc) {
 		command = target;
+		this.pw = pw;
+		this.dbc = dbc;
+	}
+		
+	public void run() {
+		result = process(dbc);
+		ServerMessage.ServerMessageOutput(result);
+		// 向客户端发送数据
+		pw.println(result);
+		pw.flush();
 	}
 
 	/**
@@ -34,9 +48,8 @@ public class Command {
 	 * @param dbc
 	 * @return 信息id
 	 */
-	public String process(String target, DatabaseConnection dbc) {
+	public String process(DatabaseConnection dbc) {
 		// 处理命令行
-		setCommand(target);
 		String[] commandArr = command.split(" ");
 
 		if (commandArr[0].equals(COMMAND_QIUT)) {
@@ -63,7 +76,7 @@ public class Command {
 	 * @return 信息id
 	 */
 	private String loginProcess(String userName, String password, DatabaseConnection dbc) {
-		String res = ServerMessage.NULL;
+		String res = ServerMessage.LOGINFAIL;
 		String sql = "SELECT password from [graduation_project].[dbo].[user_tb] where username = ?";
 
 		PreparedStatement pstmt = null;
@@ -81,7 +94,8 @@ public class Command {
 				System.out.println(password + " t");
 				System.out.println(temp + " t");
 
-				sql = "SELECT [graduation_project].[dbo].[DESDecrypt]('" + temp + "', '20111219', '12345678');";
+				//解密
+				sql = "SELECT [graduation_project].[dbo].[Des_Decrypt]('" + temp + "', '20111219', '12345678');";
 				pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
 				ResultSet rs2 = pstmt.executeQuery();
 

@@ -35,9 +35,9 @@ public class Client {
 	}
 
 	public static void main(String[] args) {
-//		selfTest();
+		selfTest();
 //		interactTest();
-		encrypt_decrypt_mix_test();
+//		encrypt_decrypt_mix_test();
 	}
 
 	public void close() {
@@ -68,6 +68,8 @@ public class Client {
 				break;
 			}
 		}
+		
+		client.close();
 	}
 
 	/**
@@ -77,7 +79,7 @@ public class Client {
 		Client client = new Client();
 
 //		loginSelfTest(client);
-//
+
 //		try {
 //			Thread.sleep(10000); // 两个测试之间要有停顿，否则出错，我这里的停顿较长
 //		} catch (InterruptedException e) {
@@ -89,7 +91,7 @@ public class Client {
 //		encryptSelfTest(client);
 		decryptSelfTest(client);
 
-		client.close();
+//		client.close();
 	}
 
 	/**
@@ -99,6 +101,8 @@ public class Client {
 		String temp = "q";
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
+		
+		client.close();
 	}
 
 	/**
@@ -130,6 +134,7 @@ public class Client {
 
 	/**
 	 * 加密解密混合测试程序 这个测试主要是测试锁和事务的
+	 * 这个测试
 	 */
 	public static void encrypt_decrypt_mix_test() {
 		Client c1 = new Client();
@@ -139,7 +144,7 @@ public class Client {
 		c1.pw.flush();
 		
 		try {
-			Thread.sleep(100);
+			Thread.sleep(800);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
