@@ -21,7 +21,7 @@ public class Command extends Thread {
 	private static Object mylock = new Object(); // static确保只有一把锁
 
 	private String command = null;
-	private KeyAndVector kav = new KeyAndVector(); // 密钥向量生成器
+	private KeyAndVector kav = null; // 密钥向量生成器
 	private PrintWriter pw = null;
 	private DatabaseConnection dbc = null;
 	private String result = null;
@@ -30,6 +30,7 @@ public class Command extends Thread {
 		command = target;
 		this.pw = pw;
 		this.dbc = dbc;
+		kav = new KeyAndVector();
 	}
 		
 	public void run() {

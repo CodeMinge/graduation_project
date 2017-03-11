@@ -27,44 +27,25 @@ public class ThreadedServer extends Thread {
 
 	public void run() {
 		String str = "";
-		String res = ServerMessage.NULL;
-		int count = 0;
-		
+
 		// 先连接数据库，这个步骤执行时间较长
 		// 一定得先连接上才能进行下一步操作
-		while (!dbc.connect().equals(ServerMessage.DBSUCCESS)) {
-			res = ServerMessage.DBFAIL;
-			ServerMessage.ServerMessageOutput(res);
-			
-			count ++;
-			if(count > 10) {
-				break;
-			}
-			
-			//连不上数据库的话，先等待一会
-			try {
-				sleep(10000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		// 一直连不上数据库,停机	
-		if(count > 10) {
+		String res = dbc.connect_ten();
+		ServerMessage.ServerMessageOutput(res);
+		pw.println(res); 		// 向客户端发送数据
+		pw.flush();
+		if (res.equals(ServerMessage.DBFAIL))
 			stop();
-		}
-				
-		while (true)
-		{
+
+		while (true) {
 			try {
 				// 读取客户端数据
 				str = br.readLine();
 				System.out.println("Client Message:" + str);
-				
-				if(str.equals("") || str == null)
+
+				if (str.equals("") || str == null)
 					continue;
-				
+
 				if (str.equals("q")) {
 					br.close();
 					pw.close();
@@ -75,7 +56,7 @@ public class ThreadedServer extends Thread {
 				// 下面是命令处理，采取新的做法，对于每条命令，我们都新建一个线程去处理，这样可以做到命令的同时处理，提高处理速度
 				// 以前必须是一条一条地处理（这是我个人的看法，不一定正确，不正确请大家指出）
 				new Command(str, pw, dbc).start();
-				
+
 			} catch (Exception e) {
 				try {
 					br.close();
