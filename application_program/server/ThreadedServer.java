@@ -47,6 +47,8 @@ public class ThreadedServer extends Thread {
 					continue;
 
 				if (str.equals("q")) {
+					pw.println(ServerMessage.QIUT);
+					pw.flush();
 					br.close();
 					pw.close();
 					socket.close();
@@ -55,7 +57,7 @@ public class ThreadedServer extends Thread {
 
 				// 下面是命令处理，采取新的做法，对于每条命令，我们都新建一个线程去处理，这样可以做到命令的同时处理，提高处理速度
 				// 以前必须是一条一条地处理（这是我个人的看法，不一定正确，不正确请大家指出）
-				new Command(str, pw, dbc).start();
+				new CommandProcess(str, pw, dbc).start();
 
 			} catch (Exception e) {
 				try {

@@ -19,8 +19,6 @@ public class TestProgram {
 				break;
 			}
 		}
-		
-		client.close();
 	}
 
 	/**
@@ -30,7 +28,7 @@ public class TestProgram {
 		Client client = new Client();
 
 //		loginSelfTest(client);
-
+//
 //		try {
 //			Thread.sleep(10000); // 两个测试之间要有停顿，否则出错，我这里的停顿较长
 //		} catch (InterruptedException e) {
@@ -41,8 +39,8 @@ public class TestProgram {
 //
 //		encryptSelfTest(client);
 		decryptSelfTest(client);
-
-//		client.close();
+		
+		
 	}
 
 	/**
@@ -52,8 +50,6 @@ public class TestProgram {
 		String temp = "q";
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
-		
-		client.close();
 	}
 
 	/**
@@ -63,15 +59,6 @@ public class TestProgram {
 		String temp = "login jd 金胖子死了";
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		client.close();
 	}
 
 	/**
@@ -81,15 +68,6 @@ public class TestProgram {
 		String temp = "encrypt worker_table card_number";
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		client.close();
 	}
 
 	/**
@@ -99,15 +77,6 @@ public class TestProgram {
 		String temp = "decrypt worker_table card_number";
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		client.close();
 	}
 
 	/**
@@ -131,15 +100,5 @@ public class TestProgram {
 		String temp2 = "decrypt worker_table card_number";
 		c2.pw.println(temp2);// 写到服务器
 		c2.pw.flush();
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		c1.close();
-		c2.close();
 	}
 }

@@ -26,7 +26,7 @@ public class Client {
 			// 写入信息到服务器端
 			pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())));
 
-			rsm = new ReadServerMessage(socket, br);// 从服务器读取消息
+			rsm = new ReadServerMessage(this, socket, br);// 从服务器读取消息
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
