@@ -7,6 +7,10 @@ import server.DatabaseConnection;
 
 public class Login extends Command {
 
+	public Login(String command) {
+		super(command);
+	}
+
 	/**
 	 * 登录命令解析
 	 * 
@@ -23,6 +27,10 @@ public class Login extends Command {
 
 		PreparedStatement pstmt = null;
 		try {
+			boolean autoCommit = dbc.dbConn.getAutoCommit();
+			// 关闭自动提交功能
+			dbc.dbConn.setAutoCommit(false);
+
 			pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
 			pstmt.setString(1, para1);
 			ResultSet rs = pstmt.executeQuery();
@@ -36,7 +44,7 @@ public class Login extends Command {
 				System.out.println(para2 + " t");
 				System.out.println(temp + " t");
 
-				//解密
+				// 解密
 				sql = "SELECT [graduation_project].[dbo].[Des_Decrypt]('" + temp + "', '20111219', '12345678');";
 				pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
 				ResultSet rs2 = pstmt.executeQuery();
@@ -54,7 +62,20 @@ public class Login extends Command {
 					break;
 				}
 			}
+
+			// 提交事务
+			dbc.dbConn.commit();
+			// 恢复原来的提交模式
+			dbc.dbConn.setAutoCommit(autoCommit);
 		} catch (SQLException e) {
+			res = ServerMessage.LOGINFAIL;
+			try {
+				// 回滚、取消前述操作
+				dbc.dbConn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 

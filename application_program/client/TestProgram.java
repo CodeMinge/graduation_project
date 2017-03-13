@@ -38,9 +38,11 @@ public class TestProgram {
 //		quitSelfTest(client);
 //
 //		encryptSelfTest(client);
-		decryptSelfTest(client);
-		
-		
+//		decryptSelfTest(client);
+		selectSelfTest(client);
+//		deleteSelfTest(client);
+//		insertSelfTest(client);
+//		updateSelfTest(client);
 	}
 
 	/**
@@ -100,5 +102,41 @@ public class TestProgram {
 		String temp2 = "decrypt worker_table card_number";
 		c2.pw.println(temp2);// 写到服务器
 		c2.pw.flush();
+	}
+	
+	/**
+	 * 查询测试程序
+	 */
+	public static void selectSelfTest(Client client) {
+		String temp = "select c1,c2,c3     from    t1,t2 where condi3=3 "+"    or condi4=5 order by o1,o2";
+		client.pw.println(temp);// 写到服务器
+		client.pw.flush();
+	}
+	
+	/**
+	 * 删除测试程序
+	 */
+	public static void deleteSelfTest(Client client) {
+		String temp = "delete from worker_table where worker_id='010'";
+		client.pw.println(temp);// 写到服务器
+		client.pw.flush();
+	}
+	
+	/**
+	 * 插入测试程序
+	 */
+	public static void insertSelfTest(Client client) {
+		String temp = "INSERT INTO Persons VALUES('Gates', 'Bill', 'Xuanwumen 10', 'Beijing')";
+		client.pw.println(temp);// 写到服务器
+		client.pw.flush();
+	}
+	
+	/**
+	 * 更新测试程序
+	 */
+	public static void updateSelfTest(Client client) {
+		String temp = "UPDATE Person SET Address = 'Zhongshan 23', City = 'Nanjing' WHERE LastName = 'Wilson'";
+		client.pw.println(temp);// 写到服务器
+		client.pw.flush();
 	}
 }

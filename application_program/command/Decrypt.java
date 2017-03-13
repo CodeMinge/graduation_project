@@ -7,6 +7,10 @@ import server.DatabaseConnection;
 
 public class Decrypt extends Command {
 
+	public Decrypt(String command) {
+		super(command);
+	}
+
 	/**
 	 * 解密信息解析，对某表的某列进行解密，某表的某列的前提是已经过加密
 	 * 

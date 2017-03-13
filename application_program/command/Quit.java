@@ -5,6 +5,10 @@ import server.DatabaseConnection;
 
 public class Quit extends Command {
 
+	public Quit(String command) {
+		super(command);
+	}
+
 	public String process(String para1, String para2, DatabaseConnection dbc) {
 		return ServerMessage.QIUT;
 	}

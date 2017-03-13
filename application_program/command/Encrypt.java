@@ -7,6 +7,10 @@ import server.DatabaseConnection;
 
 public class Encrypt extends Command {
 
+	public Encrypt(String command) {
+		super(command);
+	}
+
 	/**
 	 * 加密信息解析，对某表的某列进行加密，某表的某列的前提是未经过加密
 	 * 

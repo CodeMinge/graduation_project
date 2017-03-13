@@ -16,8 +16,10 @@ public abstract class Command {
 	
 	protected KeyAndVector kav = new KeyAndVector(); // 密钥向量生成器
 	
-	public Command() {
-		
+	protected String command = null;
+	
+	public Command(String command) {
+		this.command = command;
 	}
 	
 	public abstract String process(String para1, String para2, DatabaseConnection dbc);

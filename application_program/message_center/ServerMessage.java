@@ -18,6 +18,14 @@ public class ServerMessage {
 	public static final String ENCRYPTFAIL = "10"; // 加密失败
 	public static final String DECRYPTSUCCESS = "11"; // 解密成功
 	public static final String DECRYPTFAIL = "12"; // 解密失败
+	public static final String INSERTSUCCESS = "13"; // 插入成功
+	public static final String INSERTFAIL = "14"; // 插入失败
+	public static final String DELETESUCCESS = "15"; // 删除成功
+	public static final String DELETEFAIL = "16"; // 删除失败
+	public static final String UPDATESUCCESS = "17"; // 更新成功
+	public static final String UPDATEFAIL = "18"; // 更新失败
+	public static final String SELECTSUCCESS = "19"; // 查询成功
+	public static final String SELECTFAIL = "20"; // 查询失败
 	public static final String NULL = "1000"; // 无信息
 
 	public static final String[] ServerMessage = { 
@@ -33,7 +41,15 @@ public class ServerMessage {
 			"加密成功",
 			"加密失败",
 			"解密成功",
-			"解密失败"
+			"解密失败",
+			"插入成功",
+			"插入失败",
+			"删除成功",
+			"删除失败",
+			"更新成功",
+			"更新失败",
+			"查询成功",
+			"查询失败"
 			};
 
 	//并不是好的做法
@@ -42,7 +58,7 @@ public class ServerMessage {
 			return;
 		
 		if(Integer.parseInt(id) >= Integer.parseInt(QIUT) &&
-				Integer.parseInt(id) <= Integer.parseInt(DECRYPTFAIL)) {
+				Integer.parseInt(id) <= Integer.parseInt(SELECTFAIL)) {
 			System.out.println(ServerMessage[Integer.parseInt(id)]);
 		}
 	}
