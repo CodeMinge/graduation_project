@@ -65,8 +65,16 @@ public abstract class BaseSingleSqlParser {
 		 * start=sqlSegment.getStart(); String end=sqlSegment.getEnd();
 		 * System.out.println(start); System.out.println(end); }
 		 */
+		int i = 0;
 		StringBuffer sb = new StringBuffer();
 		for (SqlSegment sqlSegment : segments) {
+//			System.out.println(sqlSegment.getBody());
+			if(i == 0) {
+				i ++;
+				mystr.addLast(sqlSegment.getStart());
+				System.out.println(sqlSegment.getStart());
+			}
+				
 			System.out.println(sqlSegment.getBody());
 			mystr.addLast(sqlSegment.getBody());
 			sb.append(sqlSegment.getParsedSqlSegment());

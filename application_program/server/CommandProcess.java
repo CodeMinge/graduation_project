@@ -70,21 +70,20 @@ public class CommandProcess extends Thread {
 		} else {
 			SqlParserUtil test=new SqlParserUtil();
 	        test.getParsedSql(command);  // 先解析sql
-	        
-//	        System.out.println(test.mystr[0] + "----" + test.mystr[1] + "----" + test.mystr[2]);  // 定位信息
-	        
-//	        if(test.mystr[0].equals(COMMAND_SELECT)) {
-//	        	
-//	        } else if(test.mystr[0].equals(COMMAND_DELETE)) {
-//	        	com = new Delete(command);
-//				res = com.process(test.mystr[1], test.mystr[2], dbc);
-//	        } else if(test.mystr[0].equals(COMMAND_UPDATE)) {
-//	        	
-//	        } else if(test.mystr[0].equals(COMMAND_INSERT)) {
-//	        	
-//	        } else {
-//	        	System.out.println("无效信息");
-//	        }
+        
+	        if(test.mystr.get(0).equals(COMMAND_SELECT)) {
+	        	
+	        } else if(test.mystr.get(0).equals(COMMAND_DELETE)) {
+	        	com = new Delete(command);
+				res = com.process(null, null, dbc);
+	        } else if(test.mystr.get(0).equals(COMMAND_UPDATE)) {
+	        	com = new Update(command);
+				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc);
+	        } else if(test.mystr.get(0).equals(COMMAND_INSERT)) {
+	        	
+	        } else {
+	        	System.out.println("无效信息");
+	        }
 		}
 
 		return res;

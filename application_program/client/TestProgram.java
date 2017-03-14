@@ -38,8 +38,8 @@ public class TestProgram {
 //		quitSelfTest(client);
 //
 //		encryptSelfTest(client);
-//		decryptSelfTest(client);
-		selectSelfTest(client);
+		decryptSelfTest(client);
+//		selectSelfTest(client);
 //		deleteSelfTest(client);
 //		insertSelfTest(client);
 //		updateSelfTest(client);
@@ -135,7 +135,7 @@ public class TestProgram {
 	 * 更新测试程序
 	 */
 	public static void updateSelfTest(Client client) {
-		String temp = "UPDATE Person SET Address = 'Zhongshan 23', City = 'Nanjing' WHERE LastName = 'Wilson'";
+		String temp = "UPDATE worker_table SET card_number = '440102', salary = '2000' WHERE worker_id = '009'";
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
 	}
