@@ -72,7 +72,8 @@ public class CommandProcess extends Thread {
 	        test.getParsedSql(command);  // œ»Ω‚Œˆsql
         
 	        if(test.mystr.get(0).equals(COMMAND_SELECT)) {
-	        	
+	        	com = new Select(command);
+				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc);
 	        } else if(test.mystr.get(0).equals(COMMAND_DELETE)) {
 	        	com = new Delete(command);
 				res = com.process(null, null, dbc);

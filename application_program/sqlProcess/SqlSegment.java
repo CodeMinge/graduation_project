@@ -67,7 +67,7 @@ public class SqlSegment {
 		for (int i = 0; i <= sql.length(); i++) {
 			String shortSql = sql.substring(0, i);
 			// 测试输出的子句是否正确
-			System.out.println(shortSql);
+//			System.out.println(shortSql);
 			Matcher matcher = pattern.matcher(shortSql);
 			while (matcher.find()) {
 				start = matcher.group(1);

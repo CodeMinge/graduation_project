@@ -10,9 +10,6 @@ public class Update extends Command {
 	// 存储列值对
 	Map<String, String> col_value = new HashMap<String, String>();
 
-	// 存储列新值对
-	// Map<String, String> col_newValue = new HashMap<String, String>();
-
 	public Update(String command) {
 		super(command);
 	}

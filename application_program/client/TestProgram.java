@@ -108,7 +108,7 @@ public class TestProgram {
 	 * 查询测试程序
 	 */
 	public static void selectSelfTest(Client client) {
-		String temp = "select c1,c2,c3     from    t1,t2 where condi3=3 "+"    or condi4=5 order by o1,o2";
+		String temp = "select card_number,salary  from    worker_table";
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
 	}
