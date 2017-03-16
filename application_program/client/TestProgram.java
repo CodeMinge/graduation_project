@@ -126,7 +126,7 @@ public class TestProgram {
 	 * 插入测试程序
 	 */
 	public static void insertSelfTest(Client client) {
-		String temp = "INSERT INTO Persons VALUES('Gates', 'Bill', 'Xuanwumen 10', 'Beijing')";
+		String temp = "INSERT INTO worker_table VALUES('011', '440104', '7000')"; // (worker_id, card_number, salary)
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
 	}

@@ -21,7 +21,7 @@ public class CommandProcess extends Thread {
 	public static final String COMMAND_SELECT = "select"; 
 	public static final String COMMAND_DELETE = "delete from";
 	public static final String COMMAND_UPDATE = "update";
-	public static final String COMMAND_INSERT = "insert";
+	public static final String COMMAND_INSERT = "insert into";
 	
 	private String command = null;
 	private PrintWriter pw = null;
@@ -81,7 +81,8 @@ public class CommandProcess extends Thread {
 	        	com = new Update(command);
 				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc);
 	        } else if(test.mystr.get(0).equals(COMMAND_INSERT)) {
-	        	
+	        	com = new Insert(command);
+				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc);
 	        } else {
 	        	System.out.println("无效信息");
 	        }

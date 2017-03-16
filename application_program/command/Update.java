@@ -20,12 +20,12 @@ public class Update extends Command {
 	public String process(String para1, String para2, DatabaseConnection dbc) {
 		String res = ServerMessage.UPDATESUCCESS;
 
+		// 表只是一个，不需解析
+		// 先对列进行解析，并将结果存储在Map中
+		analysisCol(para2);
+
 		synchronized (workerTbLock) {
 			String sql = command;
-
-			// 表只是一个，不需解析
-			// 先对列进行解析，并将结果存储在Map中
-			analysisCol(para2);
 
 			PreparedStatement pstmt = null;
 			try {
