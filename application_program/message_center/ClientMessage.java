@@ -26,6 +26,8 @@ public class ClientMessage {
 	public static final String UPDATEFAIL = "18"; // 更新失败
 	public static final String SELECTSUCCESS = "19"; // 查询成功
 	public static final String SELECTFAIL = "20"; // 查询失败
+	public static final String REGISTERSUCCESS = "21"; // 注册成功
+	public static final String REGISTERFAIL = "22"; // 注册失败
 	public static final String NULL = "1000"; // 无信息
 
 	public static final String[] ClientMessage = { 
@@ -49,7 +51,9 @@ public class ClientMessage {
 			"更新成功",
 			"更新失败",
 			"查询成功",
-			"查询失败"
+			"查询失败",
+			"注册成功",
+			"注册失败"
 			};
 
 	//并不是好的做法
@@ -58,7 +62,7 @@ public class ClientMessage {
 			return;
 		
 		if(Integer.parseInt(id) >= Integer.parseInt(QIUT) &&
-				Integer.parseInt(id) <= Integer.parseInt(SELECTFAIL)) {
+				Integer.parseInt(id) <= Integer.parseInt(REGISTERFAIL)) {
 			System.out.println(ClientMessage[Integer.parseInt(id)]);
 		}
 	}

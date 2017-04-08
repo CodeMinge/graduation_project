@@ -13,6 +13,7 @@ public class CommandProcess extends Thread {
 
 	// 这些命令语句是自己定义的，规定只能是小写的
 	public static final String COMMAND_QIUT = "q";            //退出
+	public static final String COMMAND_REGISTER = "register"; //register 用户名 密码 --------注册
 	public static final String COMMAND_LOGIN = "login";       //login 用户名 密码 --------登录
 	public static final String COMMAND_ENCRYPT = "encrypt";   //encrypt table（表名） property（列名）---设置敏感属性
 	public static final String COMMAND_DECRYPT = "decrypt";   //decrypt table（表名） property（列名）---消除敏感属性
@@ -60,6 +61,9 @@ public class CommandProcess extends Thread {
 			res = com.process(null, null, dbc);
 		} else if (commandArr[0].equals(COMMAND_LOGIN)) {
 			com = new Login(command);
+			res = com.process(commandArr[1], commandArr[2], dbc);
+		} else if (commandArr[0].equals(COMMAND_REGISTER)) {
+			com = new Register(command);
 			res = com.process(commandArr[1], commandArr[2], dbc);
 		} else if (commandArr[0].equals(COMMAND_ENCRYPT)) {
 			com = new Encrypt(command);
