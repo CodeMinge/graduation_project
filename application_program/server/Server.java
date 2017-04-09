@@ -2,14 +2,16 @@ package server;
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 /**
  * ·şÎñÆ÷
  */
 public class Server {
-	
 	public static int PORT = 8000;
 	public static String HOST = "localhost";
+	
+	public static LinkedList<User> userList = new LinkedList<User>();
 
 	public static void main(String[] args) {
 		ServerSocket serverSocket = null;

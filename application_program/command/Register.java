@@ -44,7 +44,7 @@ public class Register extends Command {
 				res = ServerMessage.REGISTERFAIL;
 			} else {
 				
-				// 分配密钥
+				// 分配密钥，并将密钥插入到密钥表中
 				KeyManager km = new KeyManager();
 				km.save_KeyAndVector(para1, dbc);
 				
@@ -60,6 +60,7 @@ public class Register extends Command {
 				}
 				System.out.println(para2 + " " + temp1);
 				
+				// 将加密的密码加入到密码表中
 				sql = "insert into [graduation_project].[dbo].[user_tb] values (?,?,?)";
 				pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
 				pstmt.setString(1, para1);
@@ -69,6 +70,11 @@ public class Register extends Command {
 				if(i==0){
 					res = ServerMessage.REGISTERFAIL;
 	            }
+				
+				// 创建一个与用户名同名的表，这个表存储了该用户所能管理的表，如果这个表存在则不创建
+				sql = "create table " + para1 + "(table_name varchar(20))";
+				pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
+				pstmt.executeUpdate();
 			}
 
 			// 提交事务

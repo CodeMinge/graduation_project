@@ -32,10 +32,10 @@ public class KeyManager {
 
 		pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
 		pstmt.setString(1, user);
-		pstmt.setString(2, key.substring(0, 4));
-		pstmt.setString(3, key.substring(4));
-		pstmt.setString(4, vector.substring(0, 4));
-		pstmt.setString(5, vector.substring(4));
+		pstmt.setInt(2, Integer.parseInt(key.substring(0, 4)));
+		pstmt.setInt(3, Integer.parseInt(key.substring(4)));
+		pstmt.setInt(4, Integer.parseInt(vector.substring(0, 4)));
+		pstmt.setInt(5, Integer.parseInt(vector.substring(4)));
 		pstmt.executeUpdate();
 	}
 

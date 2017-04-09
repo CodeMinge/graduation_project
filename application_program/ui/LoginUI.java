@@ -68,19 +68,28 @@ public class LoginUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// 监听各个按钮
 		if (e.getActionCommand() == "退出") {
-			System.exit(0);
+			this.quit();
 		} else if (e.getActionCommand() == "登录") {
 			// 调用登录方法
 			this.login();
 		} else if (e.getActionCommand() == "注册") {
 			// 调用注册方法
-			this.Regis();
+			this.regis();
 		}
 
 	}
 
+	// 退出方法
+	private void quit() {
+		this.dispose();
+		
+		String temp = "q";
+		client.pw.println(temp);// 写到服务器
+		client.pw.flush();
+	}
+
 	// 注册方法
-	public void Regis() {
+	public void regis() {
 		this.dispose(); // 关闭当前界面
 		new RegisterUI(client); // 打开新界面
 	}
@@ -91,7 +100,6 @@ public class LoginUI extends JFrame implements ActionListener {
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
 		
-		this.jtf.setText("");
-		this.jpf.setText("");
+		// 界面切换
 	}
 }

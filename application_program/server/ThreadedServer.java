@@ -5,11 +5,7 @@ import java.net.*;
 
 import message_center.ServerMessage;
 
-public class ThreadedServer extends Thread {
-	// 每个用户都有自己的密钥
-	private String key = null;
-	private String vector = null;
-	
+public class ThreadedServer extends Thread {	
 	private Socket socket = null;
 	private BufferedReader br = null;
 	private PrintWriter pw = null;
@@ -72,21 +68,5 @@ public class ThreadedServer extends Thread {
 				}
 			}
 		}
-	}
-
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	public String getVector() {
-		return vector;
-	}
-
-	public void setVector(String vector) {
-		this.vector = vector;
 	}
 }
