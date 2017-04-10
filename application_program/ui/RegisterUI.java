@@ -17,7 +17,7 @@ public class RegisterUI extends JFrame implements ActionListener {
 	JLabel jl1, jl2;
 	JTextField jtf1, jtf2;
 	JButton jb1, jb2;
-	
+
 	Client client = null;
 
 	public RegisterUI(Client client) {
@@ -71,7 +71,7 @@ public class RegisterUI extends JFrame implements ActionListener {
 	public void register() {
 		String user = jtf1.getText();
 		String password = jtf2.getText();
-		
+
 		String temp = "register " + user + " " + password;
 		client.pw.println(temp);// Ð´µ½·þÎñÆ÷
 		client.pw.flush();

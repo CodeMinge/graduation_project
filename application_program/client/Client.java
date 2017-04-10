@@ -11,7 +11,6 @@ import ui.LoginUI;
  * ¿Í»§¶Ë
  */
 public class Client {
-
 	public Socket socket = null;
 	public BufferedReader br = null;
 	public PrintWriter pw = null;
@@ -38,9 +37,9 @@ public class Client {
 	public static void main(String[] args) {
 		Client client = new Client();
 		new LoginUI(client);
-//		TestProgram.selfTest();
-//		TestProgram.interactTest();
-//		TestProgram.encrypt_decrypt_mix_test();
+		// TestProgram.selfTest();
+		// TestProgram.interactTest();
+		// TestProgram.encrypt_decrypt_mix_test();
 	}
 
 	public void close() {

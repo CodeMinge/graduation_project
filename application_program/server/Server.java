@@ -10,7 +10,8 @@ import java.util.*;
 public class Server {
 	public static int PORT = 8000;
 	public static String HOST = "localhost";
-	
+
+	// 记录在server登录的所有用户
 	public static LinkedList<User> userList = new LinkedList<User>();
 
 	public static void main(String[] args) {
@@ -22,7 +23,7 @@ public class Server {
 			while (true) {
 				System.out.println("Waiting Client");
 				socket = serverSocket.accept();// 接受请求
-				//System.out.println(socket);
+				// System.out.println(socket);
 				System.out.println("Client Conect!");
 				new ThreadedServer(socket);
 			}

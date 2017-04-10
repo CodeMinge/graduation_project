@@ -18,7 +18,7 @@ public class LoginUI extends JFrame implements ActionListener {
 	JTextField jtf = null;
 	JLabel jlb1, jlb2 = null;
 	JPasswordField jpf = null;
-	
+
 	Client client = null;
 
 	public LoginUI(Client client) {
@@ -61,7 +61,7 @@ public class LoginUI extends JFrame implements ActionListener {
 		this.setLayout(new GridLayout(3, 1));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(300, 200, 300, 180);
-		
+
 		this.client = client;
 	}
 
@@ -82,7 +82,7 @@ public class LoginUI extends JFrame implements ActionListener {
 	// 退出方法
 	private void quit() {
 		this.dispose();
-		
+
 		String temp = "q";
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
@@ -99,7 +99,7 @@ public class LoginUI extends JFrame implements ActionListener {
 		String temp = "login " + jtf.getText() + " " + jpf.getText();
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
-		
+
 		// 界面切换
 	}
 }

@@ -37,17 +37,17 @@ public class Register extends Command {
 			ResultSet rs = pstmt.executeQuery();
 			int count = 0;
 			while (rs.next()) {
-				count ++;
+				count++;
 			}
-			
-			if(count != 0) {    //存在相同的用户名
+
+			if (count != 0) { // 存在相同的用户名
 				res = ServerMessage.REGISTERFAIL;
 			} else {
-				
+
 				// 分配密钥，并将密钥插入到密钥表中
 				KeyManager km = new KeyManager();
 				km.save_KeyAndVector(para1, dbc);
-				
+
 				// 利用分配的密钥执行加密操作,temp1是加密后的结果
 				String temp1 = "";
 				sql = "SELECT [graduation_project].[dbo].[Des_Encrypt]('" + para2 + "', '" + km.key + "', '" + km.vector
@@ -59,22 +59,34 @@ public class Register extends Command {
 					break;
 				}
 				System.out.println(para2 + " " + temp1);
-				
+
 				// 将加密的密码加入到密码表中
 				sql = "insert into [graduation_project].[dbo].[user_tb] values (?,?,?)";
 				pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
 				pstmt.setString(1, para1);
 				pstmt.setString(2, temp1);
 				pstmt.setInt(3, 0);
-				int i=pstmt.executeUpdate();
-				if(i==0){
+				int i = pstmt.executeUpdate();
+				if (i == 0) {
 					res = ServerMessage.REGISTERFAIL;
-	            }
-				
+				}
+
 				// 创建一个与用户名同名的表，这个表存储了该用户所能管理的表，如果这个表存在则不创建
-				sql = "create table " + para1 + "(table_name varchar(20))";
+				boolean b = false;
+				sql = "select name from sysobjects where xtype='u'";
 				pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
-				pstmt.executeUpdate();
+				rs2 = pstmt.executeQuery();
+				while (rs2.next()) {
+					temp1 = rs2.getString(1);
+					if (temp1.equals(para1)) {
+						b = true;
+					}
+				}
+				if (!b) {
+					sql = "create table " + para1 + "(table_name varchar(20))";
+					pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
+					pstmt.executeUpdate();
+				}
 			}
 
 			// 提交事务
