@@ -38,7 +38,7 @@ public class TestProgram {
 //		quitSelfTest(client);
 //
 //		encryptSelfTest(client);
-		decryptSelfTest(client);
+//		decryptSelfTest(client);
 //		selectSelfTest(client);
 //		deleteSelfTest(client);
 //		insertSelfTest(client);
@@ -136,6 +136,15 @@ public class TestProgram {
 	 */
 	public static void updateSelfTest(Client client) {
 		String temp = "UPDATE worker_table SET card_number = '440102', salary = '2000' WHERE worker_id = '009'";
+		client.pw.println(temp);// 写到服务器
+		client.pw.flush();
+	}
+	
+	/**
+	 * 创建表测试程序
+	 */
+	public static void createTableSelfTest(Client client) {
+		String temp = "create table yy(table_name varchar(20))";
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
 	}

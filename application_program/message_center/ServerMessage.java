@@ -28,6 +28,10 @@ public class ServerMessage {
 	public static final String SELECTFAIL = "20"; // 查询失败
 	public static final String REGISTERSUCCESS = "21"; // 注册成功
 	public static final String REGISTERFAIL = "22"; // 注册失败
+	public static final String CREATETABLESUCCESS = "23"; // 创建表成功
+	public static final String CREATETABLEFAIL = "24"; // 表已经存在
+	public static final String DROPTABLESUCCESS = "25"; // 删除表成功
+	public static final String DROPTABLEFAIL = "26"; // 表不存在
 	public static final String NULL = "1000"; // 无信息
 
 	public static final String[] ServerMessage = { 
@@ -53,7 +57,11 @@ public class ServerMessage {
 			"查询成功",
 			"查询失败",
 			"注册成功",
-			"注册失败"
+			"注册失败",
+			"创建表成功",
+			"表已经存在",
+			"删除表成功",
+			"表不存在"
 			};
 
 	//并不是好的做法
@@ -62,7 +70,7 @@ public class ServerMessage {
 			return;
 		
 		if(Integer.parseInt(id) >= Integer.parseInt(QIUT) &&
-				Integer.parseInt(id) <= Integer.parseInt(REGISTERFAIL)) {
+				Integer.parseInt(id) <= Integer.parseInt(DROPTABLEFAIL)) {
 			System.out.println(ServerMessage[Integer.parseInt(id)]);
 		}
 	}

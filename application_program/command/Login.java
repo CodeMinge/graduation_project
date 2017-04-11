@@ -23,7 +23,7 @@ public class Login extends Command {
 	 * @param dbc
 	 * @return –≈œ¢id
 	 */
-	public String process(String para1, String para2, DatabaseConnection dbc) {
+	public String process(String para1, String para2, DatabaseConnection dbc, String name) {
 		String res = ServerMessage.LOGINSUCCESS;
 		String sql = "SELECT * from [graduation_project].[dbo].[user_kv] where [user] = '" + para1 + "'";
 

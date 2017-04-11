@@ -14,7 +14,7 @@ public class Delete extends Command {
 		super(command);
 	}
 
-	public String process(String para1, String para2, DatabaseConnection dbc) {
+	public String process(String para1, String para2, DatabaseConnection dbc, String name) {
 		String res = ServerMessage.DELETESUCCESS;
 
 		synchronized (workerTbLock) {

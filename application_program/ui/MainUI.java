@@ -82,9 +82,9 @@ public class MainUI extends JFrame implements ActionListener {
 
 	// 菜单项点击事件处理程序
 	public void actionPerformed(ActionEvent e) {
-//		if (e.getSource() == quit)
-//			System.exit(0);
-		if (e.getSource() == clear) {
+		if (e.getSource() == submit)
+			this.submit();
+		else if (e.getSource() == clear) {
 			tf1.setText("");
 		}
 //		if (e.getSource() == quit2)
@@ -95,9 +95,21 @@ public class MainUI extends JFrame implements ActionListener {
 //			System.exit(0);
 	}
 
+	private void submit() {
+		String temp = tf1.getText();
+		client.pw.println(temp);// 写到服务器
+		client.pw.flush();
+		
+		tf1.setText("");
+	}
+
 	class WinLis extends WindowAdapter {
 		public void windowClosing(WindowEvent e) {
-			System.exit(0);
+			dispose();
+
+			String temp = "q";
+			client.pw.println(temp);// 写到服务器
+			client.pw.flush();
 		}
 	}
 }

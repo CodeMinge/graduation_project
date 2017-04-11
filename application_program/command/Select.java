@@ -14,7 +14,7 @@ public class Select extends Command {
 	/*
 	 * para1 -----Са      para2 -----Бэ
 	 */
-	public String process(String para1, String para2, DatabaseConnection dbc) {
+	public String process(String para1, String para2, DatabaseConnection dbc, String name) {
 		String res = ServerMessage.SELECTSUCCESS;
 		
 		synchronized (workerTbLock) {

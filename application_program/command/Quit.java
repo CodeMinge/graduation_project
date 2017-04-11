@@ -9,7 +9,7 @@ public class Quit extends Command {
 		super(command);
 	}
 
-	public String process(String para1, String para2, DatabaseConnection dbc) {
+	public String process(String para1, String para2, DatabaseConnection dbc, String name) {
 		return ServerMessage.QIUT;
 	}
 }

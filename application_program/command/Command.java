@@ -22,7 +22,7 @@ public abstract class Command {
 		this.command = command;
 	}
 	
-	public abstract String process(String para1, String para2, DatabaseConnection dbc);
+	public abstract String process(String para1, String para2, DatabaseConnection dbc, String name);
 	
 	/**
 	 * 确认数据库中是否存在表

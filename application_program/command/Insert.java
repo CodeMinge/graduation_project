@@ -22,7 +22,7 @@ public class Insert extends Command {
 	/**
 	 * para1 -----表信息 para2 -----无作为
 	 */
-	public String process(String para1, String para2, DatabaseConnection dbc) {
+	public String process(String para1, String para2, DatabaseConnection dbc, String name) {
 		String res = ServerMessage.INSERTSUCCESS;
 
 		String tb = getTb(para1);

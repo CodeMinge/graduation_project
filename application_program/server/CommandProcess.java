@@ -16,6 +16,8 @@ public class CommandProcess extends Thread {
 																// --------注册
 	public static final String COMMAND_LOGIN = "login"; // login 用户名 密码
 														// --------登录
+	public static final String COMMAND_CREATE = "create";
+	public static final String COMMAND_DROP = "drop";
 	public static final String COMMAND_ENCRYPT = "encrypt"; // encrypt table（表名）
 															// property（列名）---设置敏感属性
 	public static final String COMMAND_DECRYPT = "decrypt"; // decrypt table（表名）
@@ -63,35 +65,45 @@ public class CommandProcess extends Thread {
 
 		if (commandArr[0].equals(COMMAND_QIUT)) { // 退出命令被提前处理，这个步骤走不到
 			com = new Quit(command);
-			res = com.process(null, null, dbc);
-		} else if (commandArr[0].equals(COMMAND_LOGIN)) {
+			res = com.process(null, null, dbc, null);
+		} else if (commandArr[0].equals(COMMAND_LOGIN)) { //登录
 			com = new Login(command);
-			res = com.process(commandArr[1], commandArr[2], dbc);
-		} else if (commandArr[0].equals(COMMAND_REGISTER)) {
+			res = com.process(commandArr[1], commandArr[2], dbc, null);
+		} else if (commandArr[0].equals(COMMAND_REGISTER)) { //注册
 			com = new Register(command);
-			res = com.process(commandArr[1], commandArr[2], dbc);
+			res = com.process(commandArr[1], commandArr[2], dbc, null);
+		} else if (commandArr[0].equals(COMMAND_CREATE)) { // 创建表
+			com = new Create_Table(command);
+			res = com.process(commandArr[1], commandArr[2], dbc, userName);
+		} else if (commandArr[0].equals(COMMAND_DROP)) { // 删除表
+			com = new Drop_Table(command);
+			res = com.process(commandArr[1], commandArr[2], dbc, null);
 		} else if (commandArr[0].equals(COMMAND_ENCRYPT)) {
 			com = new Encrypt(command);
-			res = com.process(commandArr[1], commandArr[2], dbc);
+			res = com.process(commandArr[1], commandArr[2], dbc, null);
 		} else if (commandArr[0].equals(COMMAND_DECRYPT)) {
 			com = new Decrypt(command);
-			res = com.process(commandArr[1], commandArr[2], dbc);
+			res = com.process(commandArr[1], commandArr[2], dbc, null);
 		} else {
 			SqlParserUtil test = new SqlParserUtil();
 			test.getParsedSql(command); // 先解析sql
+			
+			System.out.println(test.mystr.get(0));
+			System.out.println(test.mystr.get(1));
+			System.out.println(test.mystr.get(2));
 
 			if (test.mystr.get(0).equals(COMMAND_SELECT)) {
 				com = new Select(command);
-				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc);
+				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc, null);
 			} else if (test.mystr.get(0).equals(COMMAND_DELETE)) {
 				com = new Delete(command);
-				res = com.process(null, null, dbc);
+				res = com.process(null, null, dbc, null);
 			} else if (test.mystr.get(0).equals(COMMAND_UPDATE)) {
 				com = new Update(command);
-				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc);
+				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc, null);
 			} else if (test.mystr.get(0).equals(COMMAND_INSERT)) {
 				com = new Insert(command);
-				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc);
+				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc, null);
 			} else {
 				System.out.println("无效信息");
 			}

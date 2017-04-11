@@ -17,7 +17,7 @@ public class Update extends Command {
 	/*
 	 * para1 -----表 para2 -----列
 	 */
-	public String process(String para1, String para2, DatabaseConnection dbc) {
+	public String process(String para1, String para2, DatabaseConnection dbc, String name) {
 		String res = ServerMessage.UPDATESUCCESS;
 
 		// 表只是一个，不需解析

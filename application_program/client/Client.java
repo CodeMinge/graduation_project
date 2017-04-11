@@ -36,7 +36,7 @@ public class Client {
 	}
 
 	public static void main(String[] args) {
-		new Client();
+		Client client = new Client();
 	}
 
 	public void close() {

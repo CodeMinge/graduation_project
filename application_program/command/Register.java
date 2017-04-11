@@ -22,7 +22,7 @@ public class Register extends Command {
 	 * @param dbc
 	 * @return –≈œ¢id
 	 */
-	public String process(String para1, String para2, DatabaseConnection dbc) {
+	public String process(String para1, String para2, DatabaseConnection dbc, String name) {
 		String res = ServerMessage.REGISTERSUCCESS;
 		String sql = "SELECT password from [graduation_project].[dbo].[user_tb] where username = ?";
 

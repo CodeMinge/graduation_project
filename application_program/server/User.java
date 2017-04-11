@@ -12,6 +12,21 @@ public class User {
 	private String key; // 密钥
 	private String vector; // 向量
 	private LinkedList<String> tbList = new LinkedList<String>(); // 用户所管理的表
+	
+	public User() {
+		
+	}
+	
+	public User(User user) {
+		name = user.name;
+		password = user.password;
+		type = user.type;
+		key = user.key;
+		vector = user.vector;
+		for(int i = 0; i < user.tbList.size(); i ++) {
+			tbList.add(user.tbList.get(i));
+		}
+	}
 
 	public String getName() {
 		return name;
