@@ -51,6 +51,7 @@ public class ThreadedServer extends Thread {
 
 				// ÍË³öĞÅÏ¢
 				if (str.equals("q")) {
+					Server.userList.remove(name);                        
 					pw.println(ServerMessage.QIUT);
 					pw.flush();
 					br.close();

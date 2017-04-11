@@ -13,16 +13,15 @@ import java.awt.event.*;
 public class LoginUI extends JFrame implements ActionListener {
 	// 定义登录界面的组件
 	JButton jb1, jb2, jb3 = null;
-	JRadioButton jrb1, jrb2 = null;
 	JPanel jp1, jp2, jp3 = null;
 	JTextField jtf = null;
 	JLabel jlb1, jlb2 = null;
 	JPasswordField jpf = null;
 
 	Client client = null;
+	MainUI mainUI = null;
 
 	public LoginUI(Client client) {
-		// 创建组件
 		// 创建组件
 		jb1 = new JButton("登录");
 		jb2 = new JButton("注册");
@@ -63,6 +62,7 @@ public class LoginUI extends JFrame implements ActionListener {
 		this.setBounds(300, 200, 300, 180);
 
 		this.client = client;
+		mainUI = new MainUI(client);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -76,7 +76,6 @@ public class LoginUI extends JFrame implements ActionListener {
 			// 调用注册方法
 			this.regis();
 		}
-
 	}
 
 	// 退出方法
@@ -89,17 +88,19 @@ public class LoginUI extends JFrame implements ActionListener {
 	}
 
 	// 注册方法
-	public void regis() {
+	private void regis() {
 		this.dispose(); // 关闭当前界面
 		new RegisterUI(client); // 打开新界面
 	}
 
 	// 登录方法
-	public void login() {
+	private void login() {
 		String temp = "login " + jtf.getText() + " " + jpf.getText();
 		client.pw.println(temp);// 写到服务器
 		client.pw.flush();
 
 		// 界面切换
+		this.dispose();
+		mainUI.setVisible(true);
 	}
 }

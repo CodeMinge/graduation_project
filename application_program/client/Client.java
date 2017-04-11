@@ -6,6 +6,7 @@ import java.util.*;
 
 import server.Server;
 import ui.LoginUI;
+import ui.MainUI;
 
 /**
  * ¿Í»§¶Ë
@@ -35,11 +36,7 @@ public class Client {
 	}
 
 	public static void main(String[] args) {
-		Client client = new Client();
-		new LoginUI(client);
-		// TestProgram.selfTest();
-		// TestProgram.interactTest();
-		// TestProgram.encrypt_decrypt_mix_test();
+		new Client();
 	}
 
 	public void close() {
