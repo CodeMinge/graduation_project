@@ -77,7 +77,7 @@ public class CommandProcess extends Thread {
 			res = com.process(commandArr[1], commandArr[2], dbc, userName);
 		} else if (commandArr[0].equals(COMMAND_DROP)) { // É¾³ý±í
 			com = new Drop_Table(command);
-			res = com.process(commandArr[1], commandArr[2], dbc, null);
+			res = com.process(commandArr[1], commandArr[2], dbc, userName);
 		} else if (commandArr[0].equals(COMMAND_ENCRYPT)) {
 			com = new Encrypt(command);
 			res = com.process(commandArr[1], commandArr[2], dbc, null);

@@ -43,8 +43,27 @@ public class Create_Table extends Command {
 			res = ServerMessage.CREATETABLEFAIL;
 		}
 		
-		// 用户创建表，我们要将表加入到用户的管理结构中
+		// 用户创建表，我们要将表加入到用户的管理结构中：程序中的、数据库中的
 		if(res.equals(ServerMessage.CREATETABLESUCCESS)) {
+			sql = "insert into " + name + " values('" + tb +"')";
+			
+			pstmt = null;
+			try {
+				boolean autoCommit = dbc.dbConn.getAutoCommit();
+				// 关闭自动提交功能
+				dbc.dbConn.setAutoCommit(false);
+				
+				pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
+				pstmt.executeUpdate();
+
+				// 提交事务
+				dbc.dbConn.commit();
+				// 恢复原来的提交模式
+				dbc.dbConn.setAutoCommit(autoCommit);
+			} catch (SQLException e) {
+				res = ServerMessage.CREATETABLEFAIL;
+			}
+			
 			for(int i = 0; i < Server.userList.size(); i ++) {
 				if(Server.userList.get(i).getName().equals(name)) {
 					User user = new User(Server.userList.get(i));
