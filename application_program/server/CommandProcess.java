@@ -78,12 +78,12 @@ public class CommandProcess extends Thread {
 		} else if (commandArr[0].equals(COMMAND_DROP)) { // 删除表
 			com = new Drop_Table(command);
 			res = com.process(commandArr[1], commandArr[2], dbc, userName);
-		} else if (commandArr[0].equals(COMMAND_ENCRYPT)) {
+		} else if (commandArr[0].equals(COMMAND_ENCRYPT)) { //设置敏感数据
 			com = new Encrypt(command);
-			res = com.process(commandArr[1], commandArr[2], dbc, null);
+			res = com.process(commandArr[1], commandArr[2], dbc, userName);
 		} else if (commandArr[0].equals(COMMAND_DECRYPT)) {
 			com = new Decrypt(command);
-			res = com.process(commandArr[1], commandArr[2], dbc, null);
+			res = com.process(commandArr[1], commandArr[2], dbc, userName);
 		} else {
 			SqlParserUtil test = new SqlParserUtil();
 			test.getParsedSql(command); // 先解析sql
