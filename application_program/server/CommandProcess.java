@@ -94,16 +94,16 @@ public class CommandProcess extends Thread {
 
 			if (test.mystr.get(0).equals(COMMAND_SELECT)) {
 				com = new Select(command);
-				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc, null);
+				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc, userName);
 			} else if (test.mystr.get(0).equals(COMMAND_DELETE)) {
 				com = new Delete(command);
-				res = com.process(null, null, dbc, null);
+				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc, userName);
 			} else if (test.mystr.get(0).equals(COMMAND_UPDATE)) {
 				com = new Update(command);
-				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc, null);
+				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc, userName);
 			} else if (test.mystr.get(0).equals(COMMAND_INSERT)) {
 				com = new Insert(command);
-				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc, null);
+				res = com.process(test.mystr.get(1), test.mystr.get(2), dbc, userName);
 			} else {
 				System.out.println("无效信息");
 			}
