@@ -81,7 +81,7 @@ public class CommandProcess extends Thread {
 		} else if (commandArr[0].equals(COMMAND_ENCRYPT)) { //设置敏感数据
 			com = new Encrypt(command);
 			res = com.process(commandArr[1], commandArr[2], dbc, userName);
-		} else if (commandArr[0].equals(COMMAND_DECRYPT)) {
+		} else if (commandArr[0].equals(COMMAND_DECRYPT)) { //解除敏感数据
 			com = new Decrypt(command);
 			res = com.process(commandArr[1], commandArr[2], dbc, userName);
 		} else {

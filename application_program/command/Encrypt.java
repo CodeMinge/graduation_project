@@ -23,27 +23,13 @@ public class Encrypt extends Command {
 	 * @return 信息id
 	 */
 	public String process(String para1, String para2, DatabaseConnection dbc, String name) {
-		// String res = ServerMessage.NULL;
-		// 确保表和列存在//这个步骤可以交给数据库来做
-		// res = tbExists(para1, dbc);
-		// if (res.equals(ServerMessage.NOTABLE))
-		// return res;
-		//
-		// ServerMessage.ServerMessageOutput(ServerMessage.EXISTTABLE); // 定位信息
-		//
-		// res = propertyExists(para1, para2, dbc);
-		// if (res.equals(ServerMessage.NOPROPERTY))
-		// return res;
-
-		// ServerMessage.ServerMessageOutput(ServerMessage.EXISTPROPERTY); //
-		// 定位信息
-
 		String res = ServerMessage.ENCRYPTSUCCESS;
 
 		int type = -1;
 		String key = null;
 		String vt = null;
 		// 首先查表确定自己的用户类型（超级用户或者普通用户）
+		// 确定这个将要加密的表是否在自己的管理列表中
 		for (int i = 0; i < Server.userList.size(); i++) {
 			if (Server.userList.get(i).getName().equals(name)) {
 				type = Server.userList.get(i).getType();
@@ -54,6 +40,9 @@ public class Encrypt extends Command {
 					key = Server.userList.get(i).getKey();
 					vt = Server.userList.get(i).getVector();
 //					System.out.println(key + " " + vt);
+					if(!Server.userList.get(i).contain(para1)) {
+						return ServerMessage.ENCRYPTFAIL;
+					}
 				}
 			}
 		}
