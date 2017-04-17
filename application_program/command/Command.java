@@ -8,12 +8,6 @@ import server.KeyAndVector;
 
 public abstract class Command {
 	
-	/*
-	 * static确保只有一把锁
-	 * 我们对于每个需要加锁的表都给予一把锁
-	 */
-	protected static Object workerTbLock = new Object(); 
-	
 	protected KeyAndVector kav = new KeyAndVector(); // 密钥向量生成器
 	
 	protected String command = null;
