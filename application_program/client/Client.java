@@ -5,8 +5,6 @@ import java.net.*;
 import java.util.*;
 
 import server.Server;
-import ui.LoginUI;
-import ui.MainUI;
 
 /**
  * ¿Í»§¶Ë

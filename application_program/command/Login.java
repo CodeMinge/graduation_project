@@ -73,13 +73,16 @@ public class Login extends Command {
 			}
 			user.setPassword(temp1);
 
-			// 将用户管理的表加到list中
-			sql = "SELECT * from [graduation_project].[dbo].[" + para1 + "]";
-			pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
-			rs2 = pstmt.executeQuery();
-			while (rs2.next()) {
-				temp1 = rs2.getString(1);
-				user.add(temp1);
+			// 普通用户将用户管理的表加到list中
+			// 超级用户则不需要，它能管理所有的表
+			if (user.getType() == 0) {
+				sql = "SELECT * from [graduation_project].[dbo].[" + para1 + "]";
+				pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
+				rs2 = pstmt.executeQuery();
+				while (rs2.next()) {
+					temp1 = rs2.getString(1);
+					user.add(temp1);
+				}
 			}
 
 			// 将user加到userList中

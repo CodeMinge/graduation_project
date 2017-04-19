@@ -38,9 +38,4 @@ public class KeyManager {
 		pstmt.setInt(5, Integer.parseInt(vector.substring(4)));
 		pstmt.executeUpdate();
 	}
-
-	// ªÒ»°√‹‘ø
-//	private void get_KeyAndVector() {
-//
-//	}
 }

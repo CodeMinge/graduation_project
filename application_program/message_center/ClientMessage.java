@@ -65,13 +65,16 @@ public class ClientMessage {
 			};
 
 	//并不是好的做法
-	public static void ClientMessageOutput(String id) {
+	public static String ClientMessageOutput(String id) {
 		if(id == null)
-			return;
+			return null;
 		
 		if(Integer.parseInt(id) >= Integer.parseInt(QIUT) &&
 				Integer.parseInt(id) <= Integer.parseInt(DROPTABLEFAIL)) {
 			System.out.println(ClientMessage[Integer.parseInt(id)]);
+			return ClientMessage[Integer.parseInt(id)];
 		}
+		
+		return null;
 	}
 }

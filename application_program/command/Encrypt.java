@@ -35,7 +35,8 @@ public class Encrypt extends Command {
 				type = Server.userList.get(i).getType();
 				if (type == 1) { // 超级用户
 					// 再次遍历所有用户，查看这个表是在哪个用户的管理结构中取得这个用户的密钥和向量
-
+					key = Server.userList.get(i).getKey();
+					vt = Server.userList.get(i).getVector();
 				} else { // 普通用户
 					key = Server.userList.get(i).getKey();
 					vt = Server.userList.get(i).getVector();
@@ -109,7 +110,7 @@ public class Encrypt extends Command {
 						tempInt = rs2.getInt(1);
 						break;
 					}
-					System.out.println(target + " " + tempInt);
+//					System.out.println(target + " " + tempInt);
 					
 					// 更新表，将加密后的内容更新到表中
 					sql = "UPDATE [graduation_project].[dbo].[" + para1 + "] SET " + para2 + " = " + tempInt + " WHERE "
@@ -122,7 +123,10 @@ public class Encrypt extends Command {
 				}
 			}
 			// 记录加密信息
-			sql = "insert into message_tb(tb_name,property) VALUES(?,?)";
+			if(type == 0)
+				sql = "insert into message_tb(tb_name,property) VALUES(?,?)";
+			else
+				sql = "insert into message_tb_super(tb_name,property) VALUES(?,?)";
 			pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
 			pstmt.setString(1, para1);
 			pstmt.setString(2, para2);

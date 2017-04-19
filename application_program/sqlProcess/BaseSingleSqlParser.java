@@ -72,10 +72,10 @@ public abstract class BaseSingleSqlParser {
 			if(i == 0) {
 				i ++;
 				mystr.addLast(sqlSegment.getStart());
-				System.out.println(sqlSegment.getStart());
+//				System.out.println(sqlSegment.getStart());
 			}
 				
-			System.out.println(sqlSegment.getBody());
+//			System.out.println(sqlSegment.getBody());
 			mystr.addLast(sqlSegment.getBody());
 			sb.append(sqlSegment.getParsedSqlSegment());
 		}

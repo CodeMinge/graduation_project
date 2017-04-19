@@ -31,7 +31,8 @@ public class ReadServerMessage extends Thread// 从服务器读取消息
 		{
 			try {
 				res = bReader.readLine();
-				ClientMessage.ClientMessageOutput(res);
+//				ClientMessage.ClientMessageOutput(res);
+				loginUI.mainUI.result = res;
 				if(res.equals(ClientMessage.QIUT)) {
 					client.close();
 					break;

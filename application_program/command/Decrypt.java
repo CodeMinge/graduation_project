@@ -28,24 +28,7 @@ public class Decrypt extends Command {
 		int type = -1;
 		String key = null;
 		String vt = null;
-		// 首先查表确定自己的用户类型（超级用户或者普通用户）
-		// 确定这个将要解密的表是否在自己的管理列表中
-		for (int i = 0; i < Server.userList.size(); i++) {
-			if (Server.userList.get(i).getName().equals(name)) {
-				type = Server.userList.get(i).getType();
-				if (type == 1) { // 超级用户
-					// 再次遍历所有用户，查看这个表是在哪个用户的管理结构中取得这个用户的密钥和向量
-
-				} else { // 普通用户
-					key = Server.userList.get(i).getKey();
-					vt = Server.userList.get(i).getVector();
-//					System.out.println(key + " " + vt);
-					if (!Server.userList.get(i).contain(para1)) {
-						return ServerMessage.DECRYPTFAIL;
-					}
-				}
-			}
-		}
+		boolean exist = false;
 
 		// 取得要加密的数据的数据类型，来选择解密算法
 		String sql = "select a.name 表名,b.name 字段名,c.name 字段类型,c.length 字段长度 "
@@ -54,10 +37,63 @@ public class Decrypt extends Command {
 
 		PreparedStatement pstmt = null;
 		try {
-
 			boolean autoCommit = dbc.dbConn.getAutoCommit();
 			// 关闭自动提交功能
 			dbc.dbConn.setAutoCommit(false);
+			
+			// 首先查表确定自己的用户类型（超级用户或者普通用户）
+			// 确定这个将要解密的表是否在自己的管理列表中
+			for (int i = 0; i < Server.userList.size(); i++) {
+				if (Server.userList.get(i).getName().equals(name)) {
+					type = Server.userList.get(i).getType();
+					if (type == 1) { // 超级用户
+						//该列可能是超级用户自己加密的
+						String sql2 = "select * from message_tb_super where tb_name = '" + para1 + "' and property = '" + para2 + "'";
+						pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql2);
+						ResultSet rs = pstmt.executeQuery();
+						while (rs.next()) {
+							exist = true;
+						}
+						if(exist) { // 是超级用户加的密
+							key = Server.userList.get(i).getKey();
+							vt = Server.userList.get(i).getVector();
+						} else {
+							sql2 = "select * from user_kv"; //查看所有用户
+							pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql2);
+							rs = pstmt.executeQuery();
+							while (rs.next()) {
+								sql2 = "select table_name from " + rs.getString(1); // 查看用户所管理的表
+								pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql2);
+								ResultSet rs2 = pstmt.executeQuery();
+								while(rs2.next()) {
+									if(rs2.getString(1).equals(para1)) { //该表与要解密的表相同
+										int k1 = rs.getInt(2);
+										int k2 = rs.getInt(3);
+										int v1 = rs.getInt(4);
+										int v2 = rs.getInt(5);
+
+										key = k1 + "" + k2;
+										vt = v1 + "" + v2;
+										break;
+									}
+								}
+								
+								if(key != null && vt != null) {
+									break;
+								}
+							}
+						}
+					} else { // 普通用户
+						key = Server.userList.get(i).getKey();
+						vt = Server.userList.get(i).getVector();
+//						System.out.println(key + " " + vt);
+						if (!Server.userList.get(i).contain(para1)) {
+							return ServerMessage.DECRYPTFAIL;
+						}
+					}
+					break;
+				}
+			}
 
 			String dataType = null;
 			pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
@@ -125,10 +161,16 @@ public class Decrypt extends Command {
 			}
 
 			// 记录解密信息，实质是删除原来的的加密信息
-			sql = "DELETE FROM message_tb WHERE tb_name = '" + para1 + "' and property = '" + para2 + "'";
+			if(exist)
+				sql = "DELETE FROM message_tb_super WHERE tb_name = '" + para1 + "' and property = '" + para2 + "'";
+			else
+				sql = "DELETE FROM message_tb WHERE tb_name = '" + para1 + "' and property = '" + para2 + "'";
 			pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
-			pstmt.executeUpdate();
-
+			int i = pstmt.executeUpdate();
+			if (i == 0) {
+				res = ServerMessage.DECRYPTFAIL;
+			}
+			
 			// 提交事务
 			dbc.dbConn.commit();
 			// 恢复原来的提交模式

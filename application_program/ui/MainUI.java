@@ -6,6 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import client.Client;
+import message_center.ClientMessage;
 
 /**
  * 主界面
@@ -31,6 +32,7 @@ public class MainUI extends JFrame implements ActionListener {
 	JMenuItem fruit = new JMenuItem("执行结果");
 	
 	Client client = null;
+	public static String result = null;
 
 	private void workArea() {
 		tf1.setEditable(true);// 设置文本域可编辑
@@ -87,8 +89,8 @@ public class MainUI extends JFrame implements ActionListener {
 		else if (e.getSource() == clear) {
 			tf1.setText("");
 		}
-//		if (e.getSource() == quit2)
-//			System.exit(0);
+		else if (e.getSource() == message)
+			tf2.setText(ClientMessage.ClientMessageOutput(result));
 //		if (e.getSource() == quit3)
 //			System.exit(0);
 //		if (e.getSource() == quit4)

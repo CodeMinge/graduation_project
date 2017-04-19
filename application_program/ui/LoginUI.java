@@ -19,7 +19,7 @@ public class LoginUI extends JFrame implements ActionListener {
 	JPasswordField jpf = null;
 
 	Client client = null;
-	MainUI mainUI = null;
+	public MainUI mainUI = null;
 
 	public LoginUI(Client client) {
 		// 创建组件
