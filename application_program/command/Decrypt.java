@@ -29,6 +29,7 @@ public class Decrypt extends Command {
 		String key = null;
 		String vt = null;
 		boolean exist = false;
+		boolean sup_en = false;
 
 		// 取得要加密的数据的数据类型，来选择解密算法
 		String sql = "select a.name 表名,b.name 字段名,c.name 字段类型,c.length 字段长度 "
@@ -52,6 +53,7 @@ public class Decrypt extends Command {
 						pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql2);
 						ResultSet rs = pstmt.executeQuery();
 						while (rs.next()) {
+							sup_en = true;
 							exist = true;
 						}
 						if(exist) { // 是超级用户加的密
@@ -84,12 +86,23 @@ public class Decrypt extends Command {
 							}
 						}
 					} else { // 普通用户
-						key = Server.userList.get(i).getKey();
-						vt = Server.userList.get(i).getVector();
-//						System.out.println(key + " " + vt);
 						if (!Server.userList.get(i).contain(para1)) {
 							return ServerMessage.DECRYPTFAIL;
 						}
+						//该列是普通用户加密的
+						String sql2 = "select * from message_tb where tb_name = '" + para1 + "' and property = '" + para2 + "'";
+						pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql2);
+						ResultSet rs = pstmt.executeQuery();
+						while (rs.next()) {
+							exist = true;
+						}
+						if(exist) {
+							key = Server.userList.get(i).getKey();
+							vt = Server.userList.get(i).getVector();
+						} else {
+							return ServerMessage.DECRYPTFAIL;
+						}
+//						System.out.println(key + " " + vt);
 					}
 					break;
 				}
@@ -161,7 +174,7 @@ public class Decrypt extends Command {
 			}
 
 			// 记录解密信息，实质是删除原来的的加密信息
-			if(exist)
+			if(sup_en)
 				sql = "DELETE FROM message_tb_super WHERE tb_name = '" + para1 + "' and property = '" + para2 + "'";
 			else
 				sql = "DELETE FROM message_tb WHERE tb_name = '" + para1 + "' and property = '" + para2 + "'";

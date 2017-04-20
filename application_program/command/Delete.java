@@ -25,8 +25,7 @@ public class Delete extends Command {
 			if (Server.userList.get(i).getName().equals(name)) {
 				type = Server.userList.get(i).getType();
 				if (type == 1) { // 超级用户
-					// 再次遍历所有用户，查看这个表是在哪个用户的管理结构中取得这个用户的密钥和向量
-
+					// 超级用户可以管理所有的表
 				} else { // 普通用户
 					if (!Server.userList.get(i).contain(para1)) {
 						return ServerMessage.DELETEFAIL;
