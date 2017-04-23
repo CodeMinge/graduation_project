@@ -33,6 +33,7 @@ public class MainUI extends JFrame implements ActionListener {
 	
 	Client client = null;
 	public static String result = null;
+	public Select_ResultUI srUI = null;
 
 	private void workArea() {
 		tf1.setEditable(true);// 设置文本域可编辑
@@ -91,8 +92,9 @@ public class MainUI extends JFrame implements ActionListener {
 		}
 		else if (e.getSource() == message)
 			tf2.setText(ClientMessage.ClientMessageOutput(result));
-//		if (e.getSource() == quit3)
-//			System.exit(0);
+		else if(e.getSource() == fruit) {
+			srUI.setVisible(true);
+		}
 //		if (e.getSource() == quit4)
 //			System.exit(0);
 	}

@@ -70,15 +70,16 @@ public class Select extends Command {
 					while (rs.next()) {
 						String temp = rs.getString(1);
 						list.addFirst(temp);
-						str += temp + " ";
 					}
 				}
-				str += "&&";
 			}
 
 			col = new String[list.size()];
-			for (int i = 0; i < col.length; i++)
+			for (int i = 0; i < col.length; i++) {
 				col[i] = list.get(i);
+				str += col[i] + " ";
+			}
+			str += "&";
 
 			for (int i = 0; i < tb.length; i++) { // 先支持单表查询
 				for (int j = 0; j < col.length; j++) {
@@ -211,11 +212,11 @@ public class Select extends Command {
 						str += rs.getString(message_sel.get(i).col) + " ";
 					}
 				}
-				str += "&&";
+				str += "&";
 			}
 			System.out.println(str);
 			
-			res += "||" + str;
+			res += "@" + str;
 
 			// 提交事务
 			dbc.dbConn.commit();

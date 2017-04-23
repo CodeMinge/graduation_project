@@ -45,8 +45,8 @@ public class CommandProcess extends Thread {
 
 	public void run() {
 		result = process(dbc);
-		if(result.contains("||")) {
-			String [] temp = result.split("||");
+		if(result.contains("@")) {
+			String [] temp = result.split("@");
 			ServerMessage.ServerMessageOutput(temp[0]);
 		} else {
 			ServerMessage.ServerMessageOutput(result);
