@@ -62,6 +62,7 @@ public class Update extends Command {
 			// 采用Iterator遍历HashMap
 			Iterator<String> it = col_value.keySet().iterator();
 			while (it.hasNext()) {
+				exist = false;
 				String col = (String) it.next(); // 列
 				String value = col_value.get(col); // 值
 

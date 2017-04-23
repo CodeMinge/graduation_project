@@ -45,7 +45,12 @@ public class CommandProcess extends Thread {
 
 	public void run() {
 		result = process(dbc);
-		ServerMessage.ServerMessageOutput(result);
+		if(result.contains("||")) {
+			String [] temp = result.split("||");
+			ServerMessage.ServerMessageOutput(temp[0]);
+		} else {
+			ServerMessage.ServerMessageOutput(result);
+		}
 		// 向客户端发送数据
 		pw.println(result);
 		pw.flush();
