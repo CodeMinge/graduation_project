@@ -54,7 +54,7 @@ public class LoginUI extends JFrame implements ActionListener {
 		this.add(jp2);
 		this.add(jp3);
 
-		this.setVisible(true);
+		this.setVisible(false);
 		this.setResizable(false);
 		this.setTitle("×¢²áµÇÂ¼½çÃæ");
 		this.setLayout(new GridLayout(3, 1));

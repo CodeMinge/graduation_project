@@ -59,12 +59,13 @@ public class RegisterUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "返回") {
 			this.dispose();
-			new LoginUI(client);
-			// System.out.println("-------");
+			LoginUI lui = new LoginUI(client);
+			lui.setVisible(true);
 
 		} else if (e.getActionCommand() == "注册") {
 			// 调用注册方法
 			this.register();
+			new LoginUI(client);
 		}
 	}
 

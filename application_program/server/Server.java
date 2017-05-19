@@ -4,12 +4,16 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import key_manage.Kek;
+
 /**
  * 服务器
  */
 public class Server {
 	public static int PORT = 8000;
 	public static String HOST = "localhost";
+	
+	public static Kek kek = new Kek();
 
 	// 记录在server登录的所有用户
 	public static LinkedList<User> userList = new LinkedList<User>();

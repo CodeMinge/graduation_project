@@ -104,7 +104,7 @@ public class MainUI extends JFrame implements ActionListener {
 		client.pw.println(temp);// Ð´µ½·þÎñÆ÷
 		client.pw.flush();
 		
-		tf1.setText("");
+//		tf1.setText("");
 	}
 
 	class WinLis extends WindowAdapter {

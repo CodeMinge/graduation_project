@@ -1,41 +1,85 @@
 package key_manage;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import server.DatabaseConnection;
-import server.KeyAndVector;
+import DBConnect.DBEncryptConnection;
+import DBConnect.KeyDBConnection;
+import server.Server;
 
 /**
- * 密钥管理
+ * 密钥管理者
  */
 public class KeyManager {
-	public String key = null; // 密钥
-	public String vector = null; // 向量
-
-	KeyAndVector kv = null;
-
-	// 生成密钥
-	private void create_KeyAndVector() {
-		kv = new KeyAndVector();
-		key = kv.getKey();
-		vector = kv.getVector();
+	
+	KeyLocation kl = new KeyLocation();
+	
+	// 生成密钥加密密钥
+	public int generate_KeyEncryptKey(DBEncryptConnection dbec, KeyDBConnection kdbc) {
+		kl.generate_KeyEncryptKey(dbec, kdbc);
+		
+		return Server.kek.getKekld();
 	}
-
-	// 存储密钥
-	public void save_KeyAndVector(String user, DatabaseConnection dbc) throws SQLException {
-		create_KeyAndVector();
-
-		String sql = "insert into user_kv VALUES(?,?,?,?,?)";
-
-		PreparedStatement pstmt = null;
-
-		pstmt = (PreparedStatement) dbc.dbConn.prepareStatement(sql);
-		pstmt.setString(1, user);
-		pstmt.setInt(2, Integer.parseInt(key.substring(0, 4)));
-		pstmt.setInt(3, Integer.parseInt(key.substring(4)));
-		pstmt.setInt(4, Integer.parseInt(vector.substring(0, 4)));
-		pstmt.setInt(5, Integer.parseInt(vector.substring(4)));
-		pstmt.executeUpdate();
+	
+	// 生成密钥
+	public void generate_Key(String keyName, DBEncryptConnection dbec, KeyDBConnection kdbc) {
+		kl.generate_Key(keyName, dbec, kdbc);
+	}
+	
+	// 根据密钥名称取得密钥信息
+	public Key getKey(String keyName, DBEncryptConnection dbec, KeyDBConnection kdbc) {
+		Key key = null;
+		try {
+			key = new Key(keyName, dbec);
+			key = kl.getKey(key, kdbc);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return key;
+	}
+	
+	// 更换密钥加密密钥
+	public void update_KeyEncryptKey(DBEncryptConnection dbec, KeyDBConnection kdbc) {
+		kl.updateKek(dbec, kdbc);
+	}
+	
+	// 查看密钥信息
+	public String check_Key(String keyName, DBEncryptConnection dbec) {
+		String res = null;
+		try {
+			res = kl.checkKey(keyName, dbec);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	// 查看生效密钥
+	public String check_Live_Key(DBEncryptConnection dbec) {
+		String res = null;
+		try {
+			res = kl.checkLiveKey(dbec);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	// 停用密钥
+	public void stop_Key(String keyName, DBEncryptConnection dbec) {
+		try {
+			kl.stopKey(keyName, dbec);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 销毁密钥
+	public void destory_Key(String keyName, DBEncryptConnection dbec, KeyDBConnection kdbc) {
+		try {
+			kl.destoryKey(keyName, dbec, kdbc);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

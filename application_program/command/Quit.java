@@ -1,7 +1,8 @@
 package command;
 
+import DBConnect.DBEncryptConnection;
+import DBConnect.KeyDBConnection;
 import message_center.ServerMessage;
-import server.DatabaseConnection;
 
 public class Quit extends Command {
 
@@ -9,7 +10,8 @@ public class Quit extends Command {
 		super(command);
 	}
 
-	public String process(String para1, String para2, DatabaseConnection dbc, String name) {
+	@Override
+	public String process(String para1, String para2, DBEncryptConnection dbec, KeyDBConnection kdbc, String name) {
 		return ServerMessage.QIUT;
 	}
 }

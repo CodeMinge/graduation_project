@@ -32,6 +32,10 @@ public class ClientMessage {
 	public static final String CREATETABLEFAIL = "24"; // 表已经存在
 	public static final String DROPTABLESUCCESS = "25"; // 删除表成功
 	public static final String DROPTABLEFAIL = "26"; // 表不存在
+	public static final String GENKEKSUCCESS = "27"; // 创建密钥加密密钥成功
+	public static final String GENKEKFAIL = "28"; // 创建密钥加密密钥失败
+	public static final String EKEYSUCCESS = "29"; // 创建密钥成功
+	public static final String EKEYFAIL = "30"; // 创建密钥失败
 	public static final String NULL = "1000"; // 无信息
 
 	public static final String[] ClientMessage = { 
@@ -61,7 +65,11 @@ public class ClientMessage {
 			"创建表成功",
 			"表已经存在",
 			"删除表成功",
-			"表不存在"
+			"表不存在",
+			"创建密钥加密密钥成功",
+			"创建密钥加密密钥失败",
+			"创建密钥成功",
+			"创建密钥失败"
 			};
 
 	//并不是好的做法
@@ -70,7 +78,7 @@ public class ClientMessage {
 			return null;
 		
 		if(Integer.parseInt(id) >= Integer.parseInt(QIUT) &&
-				Integer.parseInt(id) <= Integer.parseInt(DROPTABLEFAIL)) {
+				Integer.parseInt(id) <= Integer.parseInt(EKEYFAIL)) {
 			System.out.println(ClientMessage[Integer.parseInt(id)]);
 			return ClientMessage[Integer.parseInt(id)];
 		}

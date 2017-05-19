@@ -4,9 +4,7 @@ import java.io.*;
 import java.net.*;
 
 import message_center.ClientMessage;
-import message_center.ServerMessage;
-import ui.LoginUI;
-import ui.Select_ResultUI;
+import ui.*;
 
 public class ReadServerMessage extends Thread// 从服务器读取消息
 {
@@ -21,6 +19,14 @@ public class ReadServerMessage extends Thread// 从服务器读取消息
 		this.bReader = br;
 		
 		loginUI = new LoginUI(client);
+		if(c.getClass().equals(KeyManagerClient.class)) {
+			loginUI.setVisible(false);
+			loginUI.mainUI.setVisible(true);
+			client.pw.println("manager");// 告诉服务器我是管理员
+			client.pw.flush();
+		}
+		else if(c.getClass().equals(Client.class))
+			loginUI.setVisible(true);
 		
 		start();
 	}
@@ -33,7 +39,7 @@ public class ReadServerMessage extends Thread// 从服务器读取消息
 		{
 			try {
 				res = bReader.readLine();
-//				ClientMessage.ClientMessageOutput(res);
+
 				if(res.contains("@")) {
 					String [][] target = null;
 					

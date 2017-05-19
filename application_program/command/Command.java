@@ -1,11 +1,8 @@
 package command;
 
-import server.DatabaseConnection;
-import server.KeyAndVector;
+import DBConnect.*;
 
 public abstract class Command {
-	
-	protected KeyAndVector kav = new KeyAndVector(); // 密钥向量生成器
 	
 	protected String command = null;
 	
@@ -13,7 +10,7 @@ public abstract class Command {
 		this.command = command;
 	}
 	
-	public abstract String process(String para1, String para2, DatabaseConnection dbc, String name);
+	public abstract String process(String para1, String para2, DBEncryptConnection dbec, KeyDBConnection kdbc, String name);
 	
 //	/**
 //	 * 确认数据库中是否存在表
