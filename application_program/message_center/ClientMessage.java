@@ -73,7 +73,7 @@ public class ClientMessage {
 			};
 
 	//并不是好的做法
-	public static String ClientMessageOutput(String id) {
+	public static String ClientMessageOutput(String id) throws Exception {
 		if(id == null)
 			return null;
 		

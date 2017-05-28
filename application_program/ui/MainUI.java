@@ -32,7 +32,7 @@ public class MainUI extends JFrame implements ActionListener {
 	JMenuItem fruit = new JMenuItem("Ö´ÐÐ½á¹û");
 	
 	Client client = null;
-	public static String result = null;
+	public static String result = "";
 	public Select_ResultUI srUI = null;
 
 	private void workArea() {
@@ -90,13 +90,16 @@ public class MainUI extends JFrame implements ActionListener {
 		else if (e.getSource() == clear) {
 			tf1.setText("");
 		}
-		else if (e.getSource() == message)
-			tf2.setText(ClientMessage.ClientMessageOutput(result));
+		else if (e.getSource() == message) {
+			try {
+				tf2.setText(ClientMessage.ClientMessageOutput(result));
+			} catch (Exception e1) {
+				tf2.setText(result);
+			}
+		}
 		else if(e.getSource() == fruit) {
 			srUI.setVisible(true);
 		}
-//		if (e.getSource() == quit4)
-//			System.exit(0);
 	}
 
 	private void submit() {

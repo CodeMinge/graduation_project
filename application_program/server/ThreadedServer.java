@@ -91,9 +91,9 @@ public class ThreadedServer extends Thread {
 		// 先连接数据库，这个步骤执行时间较长
 		// 一定得先连接上才能进行下一步操作
 		String res = dbec.connectTen();
-		ServerMessage.ServerMessageOutput(res);
+//		ServerMessage.ServerMessageOutput(res);
 		res = kdbc.connectTen();
-		ServerMessage.ServerMessageOutput(res);
+//		ServerMessage.ServerMessageOutput(res);
 		
 		// 先不向客户端发信息了
 //		pw.println(res); // 向客户端发送数据

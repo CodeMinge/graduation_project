@@ -72,14 +72,16 @@ public class ServerMessage {
 			"创建密钥失败"
 			};
 
-	//并不是好的做法
-	public static void ServerMessageOutput(String id) {
-		if(id == null)
-			return;
-		
-		if(Integer.parseInt(id) >= Integer.parseInt(QIUT) &&
-				Integer.parseInt(id) <= Integer.parseInt(EKEYFAIL)) {
-			System.out.println(ServerMessage[Integer.parseInt(id)]);
-		}
-	}
+//	//并不是好的做法
+//	public static String ServerMessageOutput(String id) throws Exception {
+//		if(id == null)
+//			return null;
+//		
+//		if(Integer.parseInt(id) >= Integer.parseInt(QIUT) &&
+//				Integer.parseInt(id) <= Integer.parseInt(EKEYFAIL)) {
+//			return ServerMessage[Integer.parseInt(id)];
+//		}
+//		
+//		return null;
+//	}
 }

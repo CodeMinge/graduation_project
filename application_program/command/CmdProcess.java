@@ -28,6 +28,9 @@ public class CmdProcess extends Thread {
 	public static final String COMMAND_GENKEK = "generate"; // generate KeyEncryptKey-----生成密钥加密密钥
 	public static final String COMMAND_CHANGE = "change";
 	public static final String COMMAND_ESTABLISHKEY = "establish"; // 创建密钥
+	public static final String COMMAND_CHECKKEY = "check"; // 创建密钥
+	public static final String COMMAND_LIVEKEY = "live"; // 创建密钥
+	
 
 	// 而sql语句则是大小写都可以的，需留意
 	public static final String COMMAND_SELECT = "select";
@@ -55,12 +58,11 @@ public class CmdProcess extends Thread {
 
 	public void run() {
 		result = process(dbec, kdbc, km);
-		if(result.contains("@")) {
-			String [] temp = result.split("@");
-			ServerMessage.ServerMessageOutput(temp[0]);
-		} else {
-			ServerMessage.ServerMessageOutput(result);
-		}
+//		if(result.contains("@")) {
+//			String [] temp = result.split("@");
+//		} else {
+//
+//		}
 		// 向客户端发送数据
 		pw.println(result);
 		pw.flush();
@@ -105,6 +107,12 @@ public class CmdProcess extends Thread {
 		} else if(commandArr[0].equals(COMMAND_ESTABLISHKEY)) {
 			km.generate_Key(commandArr[2], dbec, kdbc);
 			res = ServerMessage.EKEYSUCCESS;
+		} else if(commandArr[0].equals(COMMAND_CHECKKEY)) {
+			com = new Check_Key(command);
+			res = com.process(commandArr[1], commandArr[2], dbec, kdbc, userName);
+		} else if(commandArr[0].equals(COMMAND_LIVEKEY)) {
+			com = new Live_Key(command);
+			res = com.process(null, null, dbec, kdbc, userName);
 		}
 		else {
 			SqlParserUtil test = new SqlParserUtil();
